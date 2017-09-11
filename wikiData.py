@@ -47,7 +47,7 @@ class wikiPageData(object):
 					if not potentialMatch:
 						if wordToPutIn != None:
 							#a link was found 
-							catagory.listOfInformation.append(wordToPutIn.nameOfLink)
+							catagory.listOfInformation.append(wordToPutIn)
 							#catagory.listOfInformation.append(word[currentIndex])
 							wordToPutIn = None
 							setBack = 1

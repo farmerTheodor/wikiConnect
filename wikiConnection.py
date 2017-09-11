@@ -69,14 +69,13 @@ class wikiSimilarity(object):
 			print catagorieScore
 			totalScore = totalScore + catagorieScore
 			for nouns in catagories.capitilizedWords:
-				print nouns	
 				nounScore = 0
 				print "_______________noun_______________"
 				nounScore = nounScore + self.findTitleNumML(nouns)
 				nounScore = nounScore + self.findSubjectNumMl(nouns)
 				nounScore = nounScore + self.findNounNumMl(nouns)
 				nounScore = nounScore + self.findMostUsedWordNumMl(nouns)
-				print nounScore
+				print nouns	+ ' = ' + str(nounScore)
 				totalScore = totalScore + nounScore
 			
 			self.textFindNumMl(catagories)
@@ -87,27 +86,31 @@ class wikiSimilarity(object):
 		setOfLinksInSentence = []
 		print "_______________link_________"
 		print catagories.listOfInformation
-		for text in catagories.listOfInformation:
+		index = 0
+		while index < len(catagories.listOfInformation):
 			textScore = 0
-			if text is link:
-				setOfLinksInSentence.append(text)	
-				textScore = textScore + self.findTitleNumML(text.nameOfLink)
-				textScore = textScore + self.findSubjectNumMl(text.nameOfLink)
-				textScore = textScore + self.findNounNumMl(text.nameOfLink)
-				textScore = textScore + self.findMostUsedWordNumMl(text.nameOfLink)	
+			if type(catagories.listOfInformation[index]) is link:
+				print "I found a link: " +catagories.listOfInformation[index].nameOfLink
+				setOfLinksInSentence.append(catagories.listOfInformation[index])	
+				textScore = textScore + self.findTitleNumML(catagories.listOfInformation[index].nameOfLink)
+				textScore = textScore + self.findSubjectNumMl(catagories.listOfInformation[index].nameOfLink)
+				textScore = textScore + self.findNounNumMl(catagories.listOfInformation[index].nameOfLink)
+				textScore = textScore + self.findMostUsedWordNumMl(catagories.listOfInformation[index].nameOfLink)
 			else:
-				if "." in text:
+				print catagories.listOfInformation[index]
+				if "." in catagories.listOfInformation[index]:
 					if len(setOfLinksInSentence) > 0:
 						for links in setOfLinksInSentence:
 							links.score = links.score + textScore
-							print link.nameOfLink + " = " + str(link.score)
+							print links.nameOfLink + " = " + str(links.score)
 					del setOfLinksInSentence[:]
 					textScore = 0
 				else:
-					textScore = textScore + self.findTitleNumML(text)
-					textScore = textScore + self.findSubjectNumMl(text)
-					textScore = textScore + self.findNounNumMl(text)
-					textScore = textScore + self.findMostUsedWordNumMl(text)
+					textScore = textScore + self.findTitleNumML(catagories.listOfInformation[index])
+					textScore = textScore + self.findSubjectNumMl(catagories.listOfInformation[index])
+					textScore = textScore + self.findNounNumMl(catagories.listOfInformation[index])
+					textScore = textScore + self.findMostUsedWordNumMl(catagories.listOfInformation[index])
+			index = index + 1
 
 
 	def findTitleNumML(self,word):
