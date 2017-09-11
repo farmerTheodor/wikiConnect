@@ -17,8 +17,8 @@ def main():
 	startingSoup = retrievePage(startingUrl)
 	finalSoup = retrievePage(finalUrl)
  	currentWikidata = wikiPageData(startingUrl, startingSoup)
- 	#finalWikidata = wikiPageData(finalUrl, finalSoup)
- 	#drawConnections = wikiSimilarity(currentWikidata, finalWikidata)
+ 	finalWikidata = wikiPageData(finalUrl, finalSoup)
+ 	drawConnections = wikiSimilarity(currentWikidata, finalWikidata)
  	
 
 if __name__ == '__main__':

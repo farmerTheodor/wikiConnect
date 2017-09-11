@@ -31,8 +31,6 @@ class wikiPageData(object):
 
 	def mergeAllLinksToInfoLists(self):
 		for catagory in self.catagoriesOfPage:
-			print "_________new Catagory_________"
-			print catagory.nameOfCatagory
 			groupWord = ""
 			currentIndex = 0
 			word = catagory.textContent.split(" ")
@@ -42,7 +40,7 @@ class wikiPageData(object):
 				if len(word[currentIndex]) > 0:
 					#groupWord is a combination of words to account for the links that have spaces in them
 					groupWord = groupWord + word[currentIndex]
-					#if it matches with something it keeps add to the groupword
+					#if it matches with something it keeps adding to the groupword
 					potentialMatch = 0
 					for otherCatagories in self.catagoriesOfPage:
 						potentialMatch, wordToPutIn = self.checkForLinks(otherCatagories.href, groupWord ,potentialMatch, wordToPutIn)
@@ -50,13 +48,13 @@ class wikiPageData(object):
 						if wordToPutIn != None:
 							#a link was found 
 							catagory.listOfInformation.append(wordToPutIn.nameOfLink)
-							catagory.listOfInformation.append(word[currentIndex])
+							#catagory.listOfInformation.append(word[currentIndex])
 							wordToPutIn = None
 							setBack = 1
 						else:
 							#not a single link was found so we break the group word and insert it into the list
-							for addedWord in groupWord.split(" "):
-								catagory.listOfInformation.append(addedWord)	
+							catagory.listOfInformation.append(groupWord.split(" ")[0])	
+
 						#resets back to the next word from the starting word
 						groupWord = ""
 						currentIndex = currentIndex - setBack
@@ -65,7 +63,8 @@ class wikiPageData(object):
 						setBack = setBack + 1
 						groupWord = groupWord + " "
 				currentIndex = currentIndex + 1
-			catagory.printListOfInformation()
+			#catagory.printListOfInformation()
+
 
 	def checkForLinks(self, arrayOfLinks, word, potentialMatch, wordToPutIn ):
 		for link in arrayOfLinks:
@@ -103,9 +102,9 @@ class catagory(object):
 	def printListOfInformation(self):
 		for element in self.listOfInformation:
 			if element is link:
-				print element.nameOfLink
+				print element.nameOfLink +" ",
 			else:
-				print element
+				print element,
 
 	def getCatagoryName(self):
 		self.nameOfCatagory = self.startOfSoup.text.strip()
@@ -152,7 +151,7 @@ class catagory(object):
 					self.frequencyWords[word.lower()] = self.frequencyWords[word.lower()] + 1
 					if numMostUsedWord < self.frequencyWords[word.lower()]:
 						self.mostUsedWord = word.lower()
-		print self.mostUsedWord
+		#print self.mostUsedWord
 
 	def getCapitilizedWords(self):
 		unUniqueWords = self.textContent.split(" ")
